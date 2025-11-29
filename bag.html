@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bag - Sistine</title>
+  <style>
+  
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      
+      position: relative;
+    }
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url('test.jpg') center center / cover no-repeat;
+      background-attachment: fixed;
+      opacity: 0.3; z-index: -1; pointer-events: none;
+    }
+    .bag-container { width: 100%; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+    .bag-title { font-size: 24px; font-weight: 300; letter-spacing: 1px; margin-bottom: 30px; color: black; }
+    .bag-item { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px 0; border-bottom: 1px solid black; }
+    .item-info { display: flex; flex-direction: column; font-size: 14px; color: black; font-weight: 300; letter-spacing: 1px; }
+    .item-actions { display: flex; align-items: center; }
+    .item-actions button {
+      background: none; border: 1px solid black; color: black;
+      padding: 5px 10px; margin: 0 5px; font-size: 14px; font-weight: 300;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .item-actions button:hover { background: black; color: white; }
+    .subtotal { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; margin-top: 30px; font-size: 16px; font-weight: 300; color: black; letter-spacing: 1px; border-top: 1px solid black; padding-top: 20px; }
+    .checkout-button { margin-top: 30px; background: none; border: 1px solid black; color: black; padding: 10px 30px; font-size: 14px; font-weight: 300; cursor: pointer; letter-spacing: 1px; transition: all 0.3s ease; }
+    .checkout-button:hover { background: black; color: white; }
+    .back-link { margin-top: 20px; text-align: center; font-size: 12px; font-weight: 300; letter-spacing: 1px; }
+    .back-link a { color: black; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="bag-container">
+  <h1 class="bag-title">YOUR BAG</h1>
+
+  <div class="bag-item" data-price="150">
+    <div class="item-info">
+      <span>CHROME HEARTS HOODIE</span>
+      <span>$150</span>
+    </div>
+    <div class="item-actions">
+      <button class="decrease">-</button>
+      <span class="quantity">1</span>
+      <button class="increase">+</button>
+      <button class="remove">X</button>
+    </div>
+  </div>
+
+  <div class="bag-item" data-price="80">
+    <div class="item-info">
+      <span>CHROME HEARTS HAT</span>
+      <span>$80</span>
+    </div>
+    <div class="item-actions">
+      <button class="decrease">-</button>
+      <span class="quantity">1</span>
+      <button class="increase">+</button>
+      <button class="remove">X</button>
+    </div>
+  </div>
+
+  <div class="subtotal">
+    <span>SUBTOTAL</span>
+    <span id="subtotalPrice">$230</span>
+  </div>
+
+  <button class="checkout-button">PROCEED TO CHECKOUT</button>
+
+  <div class="back-link">
+    <a href="aaa.html">← BACK TO HOME</a>
+  </div>
+</div>
+
+<script>
+  function updateCartQuantity() {
+    const items = document.querySelectorAll('.bag-item');
+    let quantityTotal = 0;
+    items.forEach(item => {
+      const quantity = parseInt(item.querySelector('.quantity').textContent);
+      quantityTotal += quantity;
+    });
+    localStorage.setItem('cartQuantity', quantityTotal);
+  }
+
+  function updateSubtotal() {
+    const items = document.querySelectorAll('.bag-item');
+    let total = 0;
+    items.forEach(item => {
+      const price = parseInt(item.getAttribute('data-price'));
+      const quantity = parseInt(item.querySelector('.quantity').textContent);
+      total += price * quantity;
+    });
+    document.getElementById('subtotalPrice').textContent = '$' + total;
+    updateCartQuantity(); // Also update localStorage
+  }
+
+  document.querySelectorAll('.increase').forEach(button => {
+    button.addEventListener('click', function() {
+      const quantityEl = this.parentElement.querySelector('.quantity');
+      quantityEl.textContent = parseInt(quantityEl.textContent) + 1;
+      updateSubtotal();
+    });
+  });
+
+  document.querySelectorAll('.decrease').forEach(button => {
+    button.addEventListener('click', function() {
+      const quantityEl = this.parentElement.querySelector('.quantity');
+      const current = parseInt(quantityEl.textContent);
+      if (current > 1) {
+        quantityEl.textContent = current - 1;
+        updateSubtotal();
+      }
+    });
+  });
+
+  document.querySelectorAll('.remove').forEach(button => {
+    button.addEventListener('click', function() {
+      this.closest('.bag-item').remove();
+      updateSubtotal();
+    });
+  });
+
+  // Initial subtotal and cart quantity
+  updateSubtotal();
+</script>
+
+</body>
+</html>
