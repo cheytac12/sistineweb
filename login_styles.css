@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('test.jpg') center center / cover no-repeat;
+  background-attachment: fixed;
+  opacity: 0.3;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.login-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+}
+
+.login-form h1 {
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: black;
+  margin-bottom: 30px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: none;
+  border: 1px solid black;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: black;
+}
+
+.login-form input::placeholder {
+  color: black;
+  opacity: 0.6;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px solid black;
+  color: black;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-form button:hover {
+  background: black;
+  color: white;
+}
+
+.back-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.back-link a {
+  color: black;
+  text-decoration: underline;
+}
