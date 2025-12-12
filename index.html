@@ -88,6 +88,16 @@
     footer.classList.remove('slide-down');
     privacyNotice.classList.remove('slide-down');
   });
+  
+  overlay.addEventListener('click', () => {
+  overlay.classList.remove('active');
+  menuOverlay.classList.remove('active');
+  menuButton.classList.remove('slide-up');
+  header.classList.remove('slide-up');
+  footer.classList.remove('slide-down');
+  privacyNotice.classList.remove('slide-down');
+});
+
 
   function updateBagCount() {
     const count = localStorage.getItem('cartQuantity') || 0;
@@ -119,5 +129,6 @@
 
 </body>
 </html>
+
 
 
